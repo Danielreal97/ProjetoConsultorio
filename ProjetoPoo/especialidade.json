@@ -1,10 +1,10 @@
-﻿[
+[
   {
-    "nome": "Cardiologista",
-    "descricao": "Cuida do coração"
+    "nome": "Cardiologia",
+    "descricao": "Especialidade em doenças do coração"
   },
   {
-    "nome": "Demartologista",
-    "descricao": "Cuida da Pele"
+    "nome": "Dermatologia",
+    "descricao": "Especialidade em cuidados com a pele"
   }
-, {"nome":"Clinico Geral", "descricao":"Cuida do Povo"}]
+]

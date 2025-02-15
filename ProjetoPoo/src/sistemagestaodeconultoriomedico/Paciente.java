@@ -8,38 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
-public class Paciente implements Serializable{
-    private String nome;
+public class Paciente extends Usuario implements Serializable{
+  
     private String cpf;
     private LocalDate data;
     private String telefone;
-    private String senha;
+    
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+    
     
     public Paciente(String nome, String cpf, LocalDate data, String telefone, String senha){
-             this.nome = nome;
+             super.setNome(nome);
              this.cpf = cpf;
              this.data = data;
              this.telefone = telefone;
-             this.senha = senha;
+             super.setSenha(senha);
+             super.setTipo("paciente");
              
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+   
 
     public String getCpf() {
         return cpf;
@@ -61,6 +51,19 @@ public class Paciente implements Serializable{
         this.data = data;
     }
 
+    
+    @Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    Paciente paciente = (Paciente) obj;
+    return Objects.equals(this.cpf, paciente.cpf);
+}
+
+@Override
+public int hashCode() {
+    return Objects.hash(cpf);
+}
     
 
     public String getTelefone() {

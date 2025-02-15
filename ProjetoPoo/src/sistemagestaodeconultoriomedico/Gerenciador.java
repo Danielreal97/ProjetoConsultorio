@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -32,8 +33,7 @@ public class Gerenciador {
             System.out.print("Digite o CPF: ");
             String cpf = scanner.nextLine();
 
-            System.out.print("Digite a idade: ");
-            int idade = scanner.nextInt();
+           
             scanner.nextLine(); // Consumir a quebra de linha
 
             System.out.print("Digite o telefone: ");
@@ -43,7 +43,7 @@ public class Gerenciador {
             String historicoMedico = scanner.nextLine();
 
             // Criar um novo paciente e adicioná-lo à lista
-            Paciente paciente = new Paciente(nome, cpf, idade, telefone, historicoMedico);
+            Paciente paciente = new Paciente(nome, cpf, LocalDate.parse("2001-11-11"), telefone, historicoMedico);
             pacientes.add(paciente);
 
             System.out.println("Paciente #" + i + " cadastrado com sucesso!\n");

@@ -6,55 +6,21 @@
 package projetopoo;
 import sistemagestaodeconultoriomedico.JSONManager;
 import sistemagestaodeconultoriomedico.Paciente;
-import sistemagestaodeconultoriomedico.SessionManager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import javax.swing.JOptionPane;
-import sistemagestaodeconultoriomedico.Usuario;
 
-public class TelaDadosPaciente extends javax.swing.JFrame {
-
-    private Usuario user = SessionManager.getUsuarioLogado();
-    private int index;
-    private Paciente paciente;
-    public TelaDadosPaciente() {
-        initComponents();
-        pegarPaciente();
-        
-        jTextField1.setText(paciente.getNome());
-        jFormattedTextField2.setText(paciente.getCpf());
-        jFormattedTextField3.setText(paciente.getTelefone());
-        jPasswordField1.setText(paciente.getSenha());
-        
-        DateTimeFormatter formatacao = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        jFormattedTextField1.setText(paciente.getData().format(formatacao));
-        
-        jFormattedTextField2.setEditable(false);
-    }
-
-    private void pegarPaciente(){
-        
-        boolean achou = false;
-        for (Paciente p : JSONManager.carregarPacientes()){
-            
-            if (p.getNome().equals(user.getNome())){
-                
-                this.index = JSONManager.carregarPacientes().indexOf(p);
-                
-                paciente = p;
-                achou = true;
-                break;
-            }
-            
-        }
-        if (!achou){
-            JOptionPane.showMessageDialog(null, "deu algum problema");
-        }
-        
-         
-    }
+public class TelaCadastroPaciente extends javax.swing.JFrame implements JsonManagerAtributos {
     
+    List<Paciente> pacientes = JSONManager.carregarPacientes();
+    
+    public TelaCadastroPaciente() {
+        System.out.println(pacientes);
+        initComponents();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,7 +48,6 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
         jFormattedTextField3 = new javax.swing.JFormattedTextField();
-        jButton3 = new javax.swing.JButton();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -100,7 +65,7 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Meus Dados");
+        jLabel2.setText("Cadrasto Paciente");
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
@@ -131,15 +96,10 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(255, 102, 102));
         jButton1.setForeground(new java.awt.Color(255, 102, 102));
         jButton1.setText("Voltar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jButton2.setBackground(new java.awt.Color(153, 153, 255));
         jButton2.setForeground(new java.awt.Color(102, 102, 255));
-        jButton2.setText("Atualizar");
+        jButton2.setText("Cadastrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -182,15 +142,6 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 102, 102));
-        jButton3.setForeground(new java.awt.Color(255, 102, 102));
-        jButton3.setText("Deletar Conta");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -223,15 +174,13 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jFormattedTextField3))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jButton3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jFormattedTextField3))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(212, 212, 212)
                         .addComponent(jLabel2)))
@@ -261,8 +210,7 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34))
         );
 
@@ -290,17 +238,10 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-       private boolean pacienteExiste(String nome, String cpf, String cpfUsuarioLogado) {
-    return JSONManager.carregarPacientes().stream()
-        .filter(p -> !p.getCpf().equals(cpfUsuarioLogado)) // Ignora o usuário logado
-        .anyMatch(p -> p.getCpf().equals(cpf) || p.getNome().equalsIgnoreCase(nome));
-}
-    
-    //Botao de Editar
+    //Botao de cadastrar
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        
-               // Validar campos obrigatórios
+         // Validar campos obrigatórios
     if (jTextField1.getText().trim().isEmpty() ||
         jFormattedTextField2.getText().replaceAll("[^0-9]", "").length() != 11 ||
         jFormattedTextField3.getText().replaceAll("[^0-9]", "").length() != 11 ||
@@ -324,7 +265,7 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
     if (dataNasc == null) return;
 
     // Verificar duplicatas
-    if (pacienteExiste(nome, cpf,cpf)) {
+    if (pacienteExiste(nome, cpf)) {
         JOptionPane.showMessageDialog(this,
             "Paciente já cadastrado com esses dados!",
             "Cadastro Duplicado",
@@ -332,16 +273,17 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
         return;
     }
 
-        
-        this.paciente.setNome(nome);
-        this.paciente.setCpf(cpf);
-        this.paciente.setTelefone(telefone);
-        this.paciente.setSenha(senha);
-        this.paciente.setData(dataNasc);
-        JSONManager.editarPaciente(paciente,index);
-        
-        new TelaLogin().setVisible(true);
-        dispose();
+    // Criar e salvar paciente
+    Paciente novoPaciente = new Paciente(nome, cpf, dataNasc, telefone, senha);
+    JSONManager.salvarPaciente(novoPaciente);
+    
+    JOptionPane.showMessageDialog(this,
+        "Cadastro realizado com sucesso!\nBem-vindo(a) " + nome,
+        "Sucesso",
+        JOptionPane.INFORMATION_MESSAGE);
+    
+    this.dispose();
+    new TelaLogin().setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -357,29 +299,12 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField3ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-        int saida = JOptionPane.showConfirmDialog(null, "você tem certeza que quer remover este usuario");
-        
-        if (saida == JOptionPane.OK_OPTION){
-            JSONManager.removerPaciente(paciente);
-            JOptionPane.showMessageDialog(null, "usuario deletado com sucesso");
-            new TelaLogin().setVisible(true);
-            dispose();
-        }
-       
-        System.out.println("saida do confirm dialog "+JOptionPane.OK_OPTION);
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new TelaPaciente().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
+    
+    private boolean pacienteExiste(String nome, String cpf) {
+    return JSONManager.carregarPacientes().stream()
+        .anyMatch(p -> p.getCpf().equals(cpf) || p.getNome().equalsIgnoreCase(nome));
+}
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -406,11 +331,15 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaDadosPaciente().setVisible(true);
+                new TelaCadastroPaciente().setVisible(true);
             }
         });
     }
@@ -438,7 +367,6 @@ public class TelaDadosPaciente extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
